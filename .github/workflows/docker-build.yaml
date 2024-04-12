@@ -1,0 +1,16 @@
+name: Docker Image Build
+
+on:
+  push:
+    paths: "./src/Presentation.Server/Dockerfile"
+  pull_request:
+    paths: "./src/Presentation.Server/Dockerfile"
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build our docker image
+      run: docker build . --file ./src/Presentation.Server/Dockerfile
