@@ -16,4 +16,8 @@
     <Folder Include="Pages\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj" />
+  </ItemGroup>
+
 </Project>
