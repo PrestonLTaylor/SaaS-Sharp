@@ -3,10 +3,24 @@ version: '3.4'
 services:
   saas-sharp:
     image: saas-sharp
-    container_name: SaaS-Sharp
+    container_name: saas-sharp
     build:
       context: .
       dockerfile: Presentation.Server/Dockerfile
     ports:
         - 80:80
         - 443:443 
+
+  postgres:
+    image: postgres
+    container_name: postgres-db
+    volumes:
+        - postgres-db:/var/lib/postgres/data
+    environment:
+      # TODO: Use the POSTGRES_PASSWORD_FILE environment variable so that the password isn't commited
+      POSTGRES_PASSWORD: temppw
+      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256
+
+volumes:
+  postgres-db:
+    name: saas-sharp-db
