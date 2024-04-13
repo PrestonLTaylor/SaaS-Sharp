@@ -1,10 +1,14 @@
 using Presentation.Server.Components;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
+builder.Host.UseSerilog((_, loggerConfiguration) =>
+    loggerConfiguration.ReadFrom.Configuration(builder.Configuration));
 
 var app = builder.Build();
 
@@ -17,6 +21,8 @@ else
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
     app.UseHsts();
 }
+
+app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 
